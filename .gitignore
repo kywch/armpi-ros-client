@@ -1,3 +1,8 @@
+.pixi
+devel/
+install/
+.catkin_tools/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
