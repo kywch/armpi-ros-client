@@ -1,0 +1,7 @@
+<launch>
+  <!-- Launch the node to be tested -->
+  <node pkg="kbd_teleop" type="kbd_teleop.py" name="kbd_teleop" />
+  
+  <!-- Launch the test node -->
+  <test test-name="test_chassis_teleop" pkg="kbd_teleop" type="test_chassis_teleop.py" />
+</launch>

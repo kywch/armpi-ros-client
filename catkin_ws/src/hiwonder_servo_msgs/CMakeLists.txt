@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(kbd_teleop)
+project(hiwonder_servo_msgs)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,10 +8,13 @@ project(kbd_teleop)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  chassis_control
-  rospy
-  std_msgs
-)
+        diagnostic_msgs
+        rospy
+        std_msgs
+        actionlib_msgs
+        message_generation
+        message_runtime
+        )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -47,11 +50,16 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+        FILES
+        JointState.msg
+        ServoState.msg
+        ServoStateList.msg
+        CommandDuration.msg
+        CommandDurationList.msg
+        RawIdPosDur.msg
+        MultiRawIdPosDur.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -60,18 +68,18 @@ find_package(catkin REQUIRED COMPONENTS
 #   Service2.srv
 # )
 
-## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
+# Generate actions in the 'action' folder
+add_action_files(
+        FILES
+        ActionGroupRunner.action
+)
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+        DEPENDENCIES
+        std_msgs
+        actionlib_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -103,10 +111,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES kbd_teleop
-#  CATKIN_DEPENDS chassis_control rospy std_msgs
-#  DEPENDS system_lib
+        #  INCLUDE_DIRS include
+        #  LIBRARIES hiwonder_servo_msgs
+        CATKIN_DEPENDS message_runtime std_msgs actionlib_msgs
+        #  DEPENDS system_lib
 )
 
 ###########
@@ -116,13 +124,13 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
+        # include
+        ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/kbd_teleop.cpp
+#   src/${PROJECT_NAME}/hiwonder_servo_msgs.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -133,7 +141,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/kbd_teleop_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/hiwonder_servo_msgs_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -196,14 +204,8 @@ include_directories(
 ## Testing ##
 #############
 
-if(CATKIN_ENABLE_TESTING)
-  find_package(rostest REQUIRED)
-  add_rostest(test/test_chassis_teleop.test)
-  catkin_add_nosetests(test)
-endif()
-
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_kbd_teleop.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_hiwonder_servo_msgs.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
