@@ -4,6 +4,7 @@ description = "Armpi Pro ROS noetic client for teleop"
 authors = [{name = "Kyoung Choe", email = "choe.kyoung@gmail.com"}]
 version = "0.0.1"
 requires-python = ">=3.8,<3.9"
+dependencies = ["tinyik>=2.2.1,<3"]
 
 [tool.pixi.project]
 channels = ["robostack", "conda-forge"]
